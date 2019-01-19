@@ -34,7 +34,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 // HelpActivity
-public class HelpActivity extends Activity
+public class Help extends Activity
 {
     private static final String PREF_DARK = "pref_dark";
 
