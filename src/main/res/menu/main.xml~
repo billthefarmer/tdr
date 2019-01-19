@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
+
+  <item
+      android:id="@+id/range"
+      android:icon="@drawable/ic_action_import_export"
+      android:showAsAction="always"
+      android:title="@string/range">
+
+    <menu>
+      <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/s10m"
+            android:title="@string/s10m" />
+
+        <item
+            android:id="@+id/s20m"
+            android:title="@string/s20m" />
+
+        <item
+            android:id="@+id/s50m"
+            android:title="@string/s50m" />
+
+        <item
+            android:id="@+id/s100m"
+            android:checked="true"
+            android:title="@string/s100m" />
+
+        <item
+            android:id="@+id/s200m"
+            android:title="@string/s200m" />
+
+        <item
+            android:id="@+id/s500m"
+            android:title="@string/s500m" />
+
+        <item
+            android:id="@+id/s1000m"
+            android:title="@string/s1000m" />
+
+      </group>
+    </menu>
+  </item>
+
+  <item
+      android:id="@+id/left"
+      android:icon="@drawable/ic_action_previous_item"
+      android:showAsAction="always"
+      android:title="@string/left" />
+
+  <item
+      android:id="@+id/right"
+      android:icon="@drawable/ic_action_next_item"
+      android:showAsAction="always"
+      android:title="@string/right" />
+
+  <item
+      android:id="@+id/start"
+      android:icon="@drawable/ic_action_back"
+      android:showAsAction="ifRoom"
+      android:title="@string/start" />
+
+  <item
+      android:id="@+id/end"
+      android:icon="@drawable/ic_action_forward"
+      android:showAsAction="ifRoom"
+      android:title="@string/end" />
+
+  <item
+      android:id="@+id/dark"
+      android:icon="@drawable/ic_action_brightness_high"
+      android:showAsAction="ifRoom"
+      android:title="@string/dark" />
+
+  <item
+      android:id="@+id/about"
+      android:icon="@drawable/ic_action_about"
+      android:showAsAction="ifRoom"
+      android:title="@string/about" />
+
+</menu>

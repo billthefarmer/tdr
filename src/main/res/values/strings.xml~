@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <string name="app_name">Time Domain Reflectometer</string>
+
+  <string name="about">About</string>
+  <string name="range">Range</string>
+  <string name="dark">Dark theme</string>
+  <string name="left">Left</string>
+  <string name="right">Right</string>
+  <string name="start">Start</string>
+  <string name="end">End</string>
+
+  <string name="r10m">10m</string>
+  <string name="r20m">20m</string>
+  <string name="r50m">50m</string>
+  <string name="r100m">100m</string>
+  <string name="r200m">200m</string>
+  <string name="r500m">500m</string>
+  <string name="r1000m">1000m</string>
+
+</resources>

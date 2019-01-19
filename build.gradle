@@ -41,8 +41,7 @@ android {
     }
 
     lintOptions {
-        disable 'IconDensities', 'ClickableViewAccessibility',
-            'CustomViewStyleable', 'ExpiredTargetSdkVersion'
+        disable 'ExpiredTargetSdkVersion'
         // abortOnError false
     }
 }
