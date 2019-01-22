@@ -55,8 +55,20 @@ public class Main extends Activity
     private static final int VERSION_M = 23;
 
     protected static final int SIZE = 20;
-    protected static final int DEFAULT_TIMEBASE = 3;
+    protected static final int DEFAULT_RANGE = 3;
     protected static final float SCALE = 20;
+
+    private static final float values[] =
+    {
+        0.1f, 0.2f, 0.5f, 1.0f,
+        2.0f, 5.0f, 10.0f
+    };
+
+    private static final int counts[] =
+    {
+        256, 512, 1024, 2048,
+        4096, 8192, 16384
+    };
 
     private Scope scope;
     private XScale xscale;
@@ -68,6 +80,9 @@ public class Main extends Activity
     private SubMenu submenu;
 
     private boolean dark;
+    private boolean screen;
+
+    private int range;
 
     // On create
     @Override
@@ -133,6 +148,47 @@ public class Main extends Activity
         int id = item.getItemId();
         switch (id)
         {
+        case R.id.r10m:
+            range = 0;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r20m:
+            range = 1;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r50m:
+            range = 2;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r100m:
+            range = 3;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r200m:
+            range = 4;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r500m:
+            range = 5;
+            item.setChecked(true);
+            setRange(range);
+            break;
+
+        case R.id.r1000m:
+            range = 6;
+            item.setChecked(true);
+            setRange(range);
+            break;
 
         default:
         }
@@ -169,6 +225,30 @@ public class Main extends Activity
 
         // Stop audio thread
         audio.stop();
+    }
+
+    // Set range
+    void setRange(int range)
+    {
+        if (scope != null && xscale != null && unit != null)
+        {
+            // Set up scale
+            scope.scale = values[range];
+            xscale.scale = scope.scale;
+            xscale.step = 1000 * xscale.scale;
+            unit.scale = scope.scale;
+
+            // Set up scope points
+            scope.points = (range == 0);
+
+            // Reset start
+            scope.start = 0;
+            xscale.start = 0;
+
+            // Update display
+            xscale.postInvalidate();
+            unit.postInvalidate();
+        }
     }
 
     // Get preferences

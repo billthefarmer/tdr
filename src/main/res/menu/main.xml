@@ -71,8 +71,16 @@
       android:title="@string/end" />
 
   <item
+      android:id="@+id/screen"
+      android:icon="@drawable/ic_action_brightness_low"
+      android:checkable="true"
+      android:showAsAction="ifRoom"
+      android:title="@string/screen" />
+
+  <item
       android:id="@+id/dark"
       android:icon="@drawable/ic_action_brightness_high"
+      android:checkable="true"
       android:showAsAction="ifRoom"
       android:title="@string/dark" />
 
