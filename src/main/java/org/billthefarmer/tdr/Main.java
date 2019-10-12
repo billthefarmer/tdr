@@ -52,8 +52,6 @@ public class Main extends Activity
 
     private static final String TAG = "TDR";
 
-    private static final int VERSION_M = 23;
-
     protected static final int SIZE = 20;
     protected static final int DEFAULT_RANGE = 3;
     protected static final float SCALE = 20;
@@ -207,7 +205,7 @@ public class Main extends Activity
         // Get preferences
         getPreferences();
 
-        if (theme != dark && Build.VERSION.SDK_INT != VERSION_M)
+        if (theme != dark && Build.VERSION.SDK_INT != Build.VERSION_CODES.M)
             recreate();
 
         // Start the audio thread
