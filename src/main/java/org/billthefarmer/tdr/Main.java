@@ -36,6 +36,7 @@ import android.media.AudioTrack;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -43,6 +44,9 @@ import android.view.SubMenu;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 // MainActivity
 public class Main extends Activity
@@ -408,8 +412,7 @@ public class Main extends Activity
         {
             // Assume the output sample rate will work on the input as
             // there isn't an AudioRecord.getNativeInputSampleRate()
-            sample =
-                AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
+            sample = 192000;
 
             // Get buffer size
             int size =
@@ -469,7 +472,7 @@ public class Main extends Activity
             state = INIT;
             short last = 0;
 
-            // Continue until he thread is stopped
+            // Continue until the thread is stopped
             while (thread != null)
             {
                 // Read a buffer of data

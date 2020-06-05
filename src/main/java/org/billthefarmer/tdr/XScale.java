@@ -41,6 +41,7 @@ public class XScale extends View
     protected float step;
     protected float scale;
     protected float start;
+    protected float offset;
 
     private int width;
     private int height;
@@ -101,6 +102,9 @@ public class XScale extends View
     @Override
     protected void onDraw(Canvas canvas)
     {
+        // Translate canvas
+        canvas.translate(offset, 0);
+
         // Set up paint
         paint.setStrokeWidth(2);
         paint.setColor(textColour);
