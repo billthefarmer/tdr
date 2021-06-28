@@ -78,6 +78,7 @@ public class Main extends Activity
     private Unit unit;
 
     private Audio audio;
+    private Pulse pulse;
     private Toast toast;
     private SubMenu submenu;
 
@@ -110,6 +111,7 @@ public class Main extends Activity
 
         // Create audio
         audio = new Audio();
+        pulse = new Pulse();
 
         if (scope != null)
             scope.audio = audio;
@@ -214,6 +216,7 @@ public class Main extends Activity
 
         // Start the audio thread
         audio.start();
+        pulse.start();
     }
 
     // On pause
@@ -227,6 +230,7 @@ public class Main extends Activity
 
         // Stop audio thread
         audio.stop();
+        pulse.stop();
     }
 
     // Set range
@@ -327,6 +331,101 @@ public class Main extends Activity
         toast.show();
     }
 
+    // Pulse
+    protected class Pulse implements Runnable
+    {
+        protected Thread thread;
+        private AudioTrack audioTrack;
+
+        // Start
+        protected void start()
+        {
+            thread = new Thread(this, "Pulse");
+            thread.start();
+        }
+
+        // Stop
+        protected void stop()
+        {
+            Thread t = thread;
+            thread = null;
+
+            // Wait for the thread to exit
+            t.join();
+        }
+
+        public void run()
+        {
+            processPulse();
+        }
+
+        // Process pulse
+        @SuppressWarnings("deprecation")
+        protected void processPulse()
+        {
+            short buffer[];
+
+            int rate =
+                AudioTrack.getNativeOutputSampleRate(AudioManager.STREAM_MUSIC);
+            int minSize =
+                AudioTrack.getMinBufferSize(rate, AudioFormat.CHANNEL_OUT_MONO,
+                                            AudioFormat.ENCODING_PCM_16BIT);
+
+            // Find a suitable buffer size
+            int sizes[] = {1024, 2048, 4096, 8192, 16384, 32768};
+            int size = 0;
+
+            for (int s : sizes)
+            {
+                if (s > minSize)
+                {
+                    size = s;
+                    break;
+                }
+            }
+
+            // Create the audio track
+            audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, rate,
+                                        AudioFormat.CHANNEL_OUT_MONO,
+                                        AudioFormat.ENCODING_PCM_16BIT,
+                                        size, AudioTrack.MODE_STREAM);
+            // Check audioTrack
+
+            // Check state
+            int state = audioTrack.getState();
+
+            if (state != AudioTrack.STATE_INITIALIZED)
+            {
+                audioTrack.release();
+                return;
+            }
+
+            audioTrack.play();
+
+            // Create the buffer
+            buffer = new short[size];
+
+            while (thread != null)
+            {
+                synchronized(audio)
+                {
+                    audio.sync = true;
+                }
+
+                // Fill the current buffer
+                for (int i = 0; i < buffer.length; i++)
+                {
+                    // ...
+                }
+
+                audioTrack.write(buffer, 0, buffer.length);
+            }
+
+            audioTrack.stop();
+            audioTrack.release();
+        }
+    }
+
     // Audio
     protected class Audio implements Runnable
     {
@@ -338,6 +437,7 @@ public class Main extends Activity
         protected Thread thread;
         protected short data[];
         protected long length;
+        protected boolean sync;
 
         // Private data
         private static final int SAMPLES = 524288;
@@ -383,8 +483,7 @@ public class Main extends Activity
             thread = null;
 
             // Wait for the thread to exit
-            while (t != null && t.isAlive())
-                Thread.yield();
+            t.join();
         }
 
         // Stop and release the audio recorder
